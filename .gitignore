@@ -1,0 +1,55 @@
+# Node modules
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Editor-specific files
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Dependency directories
+jspm_packages/
+
+# Temporary files
+*.tmp
+*.swp
+
+# Testing files
+coverage/
+*.lcov
+
+# Parcel-bundler cache
+.cache/
+
+# Public folder artifacts (if applicable)
+*.html
+
+# React Native
+.expo/
+.expo-shared/
+
+# Storybook
+storybook-static/
+
+# Git
+.git/
+
+# Ignore specific React files
+*.map
