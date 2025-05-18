@@ -38,15 +38,26 @@ const tourController = {
       const queryObj = { ...req.query };
       const excludedFields = ['page', 'sort', 'limit', 'fields'];
       excludedFields.forEach((el) => delete queryObj[el]);
-      console.log(queryObj);
 
-      const parsedQuery = transformQuery(queryObj);
-      console.log(parsedQuery);
+      const queryStr = transformQuery(queryObj);
 
       //{ 'duration[gte]': '5', difficulty: 'easy' }
       //{ duration: {$gte: '5'}, difficulty: 'easy' }
       // const query = Tour.find({ difficulty: 'easy', duration: { $gte: '5' } });
-      const query = Tour.find(parsedQuery);
+      let query = Tour.find(queryStr);
+
+      // SORTING
+      if (req.query.sort) {
+        // sort by price then by ratingsAverage, for example
+        const sortBy = req.query.sort.split(',').join(' ');
+
+        query = query.sort(sortBy);
+        // sort('price ratingsAverage)
+      } else {
+        // by default set by createdAt. latest come first
+        query = query.sort('-createdAt');
+      }
+
       // EXECUTE QUERY
       const tours = await query;
 
