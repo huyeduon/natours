@@ -58,8 +58,30 @@ const tourController = {
         query = query.sort('-createdAt');
       }
 
+      // 3) Field limiting
+      if (req.query.fields) {
+        const fields = req.query.fields.split(',').join(' ');
+        query = query.select(fields);
+      } else {
+        query = query.select('-__v');
+      }
+
+      // 4) Pagination
+      //page=2&limit=10: view page 2 with 10 result per page
+      const page = req.query.page * 1 || 1; // convert a string to number
+      const limit = req.query.limit * 1 || 100;
+      const skip = (page - 1) * limit;
+
+      if (req.query.page) {
+        const numTours = await Tour.countDocuments();
+        if (skip >= numTours) throw new Error('This page does not exist');
+      }
+
+      query = query.skip(skip).limit(limit);
       // EXECUTE QUERY
       const tours = await query;
+
+      // query.sort().select().skip().limit()
 
       // SEND RESPONSE
       res.status(200).json({

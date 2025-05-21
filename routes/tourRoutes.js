@@ -3,7 +3,6 @@ const router = express.Router();
 import { tourController } from '../controllers/tourController.js';
 
 // router.param('id', tourController.checkID);
-
 // create a check body middleware functionn
 // check if body contains the name and price property
 // if not send back 400 (bad request)
