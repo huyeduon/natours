@@ -1,35 +1,30 @@
-import express from 'express';
-
-const userController = {
-  getAllUsers: (req, res) => {
-    res
-      .status(500)
-      .json({ status: 'error', message: 'This route is not yet implemented.' });
-  },
-
-  getUser: (req, res) => {
-    res
-      .status(500)
-      .json({ status: 'error', message: 'This route is not yet implemented.' });
-  },
-
-  createUser: (req, res) => {
-    res
-      .status(500)
-      .json({ status: 'error', message: 'This route is not yet implemented.' });
-  },
-
-  updateUser: (req, res) => {
-    res
-      .status(500)
-      .json({ status: 'error', message: 'This route is not yet implemented.' });
-  },
-
-  deleteUser: (req, res) => {
-    res
-      .status(500)
-      .json({ status: 'error', message: 'This route is not yet implemented.' });
-  },
+exports.getAllUsers = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined!',
+  });
 };
-
-export { userController };
+exports.getUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined!',
+  });
+};
+exports.createUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined!',
+  });
+};
+exports.updateUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined!',
+  });
+};
+exports.deleteUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined!',
+  });
+};

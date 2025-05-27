@@ -1,7 +1,10 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+// import mongoose from 'mongoose';
+// import dotenv from 'dotenv';
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
-import { app } from './app.js';
+const app = require('./app.js');
+// import { app } from './app.js';
 
 const port = process.env.PORT || 3000;
 // const DB = process.env.DATABASE_LOCAL;
