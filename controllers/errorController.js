@@ -27,6 +27,12 @@ const sendErrorDev = (err, res) => {
   });
 };
 
+const handleJWTError = () =>
+  new AppError('Invalid token. Please login again!', 401);
+
+const handleJWTExpiredEror = () =>
+  new AppError('Your token has been expired, Please login again', 401);
+
 const sendErrorProd = (err, res) => {
   // Operational, trusted error: send message to clients
   if (err.isOperational) {
@@ -37,7 +43,7 @@ const sendErrorProd = (err, res) => {
     // Programming or other unknown error: don't leak error details
   } else {
     // 1) Log error
-    // console.error('ERROR', err);
+    console.error('ERROR', err);
     // 2) Send generic message
     res.status(500).json({
       status: 'error',
@@ -55,12 +61,14 @@ module.exports = (err, req, res, next) => {
     // Do not shallow clone; just use original err for logic
     let error = err;
 
-    console.log(error.name);
     if (error.name === 'CastError') error = handleCastErrorDB(error);
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);
     if (error.name === 'ValidationError')
       error = handleValidationErrorDB(error);
 
+    if (error.name === 'JsonWebTokenError') error = handleJWTError(error);
+
+    if (error.name === 'TokenExpiredError') error = handleJWTExpiredEror(error);
     // Always set statusCode/status fallback
     error.statusCode = error.statusCode || 500;
     error.status = error.status || 'error';
