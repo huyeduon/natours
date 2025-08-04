@@ -55,7 +55,7 @@ userSchema.pre('save', async function (next) {
 });
 
 userSchema.pre('save', function (next) {
-  if (!this.isModified('password') || this.isNew) return nexx();
+  if (!this.isModified('password') || this.isNew) return next();
 
   this.passwordChangedAt = Date.now() - 1000;
   next();
@@ -77,6 +77,7 @@ userSchema.methods.changePasswordAfter = function (JWTTimesstamp) {
     );
 
     return JWTTimesstamp < changedTimestamp;
+    // true means the password has changed and this token is old and not valid
   }
   // False means NOT changed
   return false;
