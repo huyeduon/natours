@@ -33,16 +33,6 @@ const signup = catchAsync(async (req, res, next) => {
     role: req.body.role,
   });
 
-  // create a jwt token that sign from userid
-  // const token = signToken(newUser._id);
-
-  // res.status(201).json({
-  //   status: 'success',
-  //   token,
-  //   data: {
-  //     user: newUser,
-  //   },
-  // });
   createSendToken(newUser, 201, res);
 });
 
@@ -61,13 +51,6 @@ const login = catchAsync(async (req, res, next) => {
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError('Incorrect email or password'), 401);
   }
-
-  // 3) If everything is ok, send token to client
-  // const token = signToken(user._id);
-  // res.status(200).json({
-  //   status: 'success',
-  //   token,
-  // });
   createSendToken(user, 200, res);
 });
 
@@ -183,12 +166,6 @@ const resetPassword = async (req, res, next) => {
   user.passwordResetExpires = undefined;
   await user.save();
 
-  // Log the user in, send JWT
-  // const token = signToken(user._id);
-  // res.status(200).json({
-  //   status: 'success',
-  //   token,
-  // });
   createSendToken(user, 200, res);
 };
 
