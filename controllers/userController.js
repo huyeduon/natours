@@ -11,19 +11,6 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 
-const getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find();
-
-  // SEND RESPONSE
-  res.status(200).json({
-    status: 'success',
-    results: users.length,
-    data: {
-      users,
-    },
-  });
-});
-
 // User update their own user data
 const updateMe = catchAsync(async (req, res, next) => {
   // 1) Create error if the usr Post password data
@@ -44,9 +31,30 @@ const updateMe = catchAsync(async (req, res, next) => {
   });
 
   res.status(200).json({
-    status: 'Success',
+    status: 'success',
     date: {
       user: updatedUser,
+    },
+  });
+});
+
+const deleteMe = catchAsync(async (req, res, next) => {
+  await User.findByIdAndUpdate(req.user.id, { active: false });
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});
+const getAllUsers = catchAsync(async (req, res, next) => {
+  const users = await User.find();
+
+  // SEND RESPONSE
+  res.status(200).json({
+    status: 'success',
+    results: users.length,
+    data: {
+      users,
     },
   });
 });
@@ -83,4 +91,5 @@ module.exports = {
   updateUser,
   deleteUser,
   updateMe,
+  deleteMe,
 };
