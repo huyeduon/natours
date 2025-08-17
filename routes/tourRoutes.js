@@ -11,13 +11,13 @@ router.route('/tour-stats').get(tourController.getTourStats);
 router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
 router
   .route('/')
-  .get(authController.protect, tourController.getAllTours)
-  .post(tourController.createTour);
+  .get(tourController.getAllTours)
+  .post(authController.protect, tourController.createTour);
 
 router
   .route('/:id')
   .get(tourController.getTour)
-  .patch(tourController.updateTour)
+  .patch(authController.protect, tourController.updateTour)
   .delete(
     authController.protect,
     authController.restrictTo('admin', 'lead-guide'),
@@ -25,30 +25,3 @@ router
   );
 
 module.exports = router;
-
-// const express = require("express");
-// const router = express.Router();
-// const { authorization } = require("../middlewares/auth.middleware");
-
-// const {
-//   getAllCategory,
-//   postCategory,
-//   getCategoryById,
-//   deleteCategoryById,
-//   updateCategoryById,
-// } = require("../controllers/category.controller");
-
-// const { asyncHandle } = require("../utils/asyncHandle");
-
-// // public routes
-// router.get("/", asyncHandle(getAllCategory));
-// router.get("/:id", asyncHandle(getCategoryById));
-
-// router.use(authorization);
-
-// // protected routes
-// router.post("/", asyncHandle(postCategory));
-// router.delete("/:id", asyncHandle(deleteCategoryById));
-// router.put("/:id", asyncHandle(updateCategoryById));
-
-// module.exports = router;
