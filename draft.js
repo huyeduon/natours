@@ -1,12 +1,48 @@
-async function fetchData() {
-  try {
-    const res1 = await fetch('url1');
-    const data1 = await res1.json();
-    const res2 = await fetch('url2');
-    const data2 = await res2.json();
-  } catch (err) {
-    // handle error
-  }
+const { create } = require('./models/tourModel');
+
+function greet(greeting) {
+  return function (name) {
+    console.log(`${greeting}, ${name}!`);
+  };
 }
 
-fetchData();
+const sayHello = greet('Hello');
+const sayHai = greet('Hi');
+
+sayHello('Alice');
+sayHai('Bob');
+
+// Closure
+function createCounter() {
+  let count = 0;
+
+  return function () {
+    count++;
+    console.log(count);
+  };
+}
+
+const counter1 = createCounter();
+const counter2 = createCounter();
+counter1();
+counter1();
+
+counter2();
+counter1();
+
+// Factory function
+
+function createLengthValidator(minLength) {
+  return function (value) {
+    return value.length >= minLength;
+  };
+}
+
+const validateUsername = createLengthValidator(5);
+const validatePassword = createLengthValidator(8);
+
+console.log(validateUsername('john'));
+console.log(validateUsername('johndoe'));
+
+console.log(validatePassword('short'));
+console.log(validatePassword('verysecuredpassword'));
