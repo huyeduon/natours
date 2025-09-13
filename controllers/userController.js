@@ -46,18 +46,6 @@ const deleteMe = catchAsync(async (req, res, next) => {
     data: null,
   });
 });
-const getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find();
-
-  // SEND RESPONSE
-  res.status(200).json({
-    status: 'success',
-    results: users.length,
-    data: {
-      users,
-    },
-  });
-});
 
 const getUser = (req, res) => {
   res.status(500).json({
@@ -68,13 +56,15 @@ const getUser = (req, res) => {
 const createUser = (req, res) => {
   res.status(500).json({
     status: 'error',
-    message: 'This route is not yet defined!',
+    message: 'This route is not yet defined! Please use sign-up instead',
   });
 };
 
 // Do NOT update passwords with this!
 const deleteUser = factory.deleteOne(User);
 const updateUser = factory.updateOne(User);
+const getAllUsers = factory.getAll(User);
+
 module.exports = {
   getAllUsers,
   getUser,
