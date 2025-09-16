@@ -11,6 +11,11 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 
+const getMe = (req, res, next) => {
+  req.params.id = req.user.id;
+  next();
+};
+
 // User update their own user data
 const updateMe = catchAsync(async (req, res, next) => {
   // 1) Create error if the usr Post password data
@@ -47,19 +52,19 @@ const deleteMe = catchAsync(async (req, res, next) => {
   });
 });
 
-const getUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet defined!',
-  });
-};
+// const getUser = (req, res) => {
+//   res.status(500).json({
+//     status: 'error',
+//     message: 'This route is not yet defined!',
+//   });
+// };
 const createUser = (req, res) => {
   res.status(500).json({
     status: 'error',
     message: 'This route is not yet defined! Please use sign-up instead',
   });
 };
-
+const getUser = factory.getOne(User);
 // Do NOT update passwords with this!
 const deleteUser = factory.deleteOne(User);
 const updateUser = factory.updateOne(User);
@@ -73,4 +78,5 @@ module.exports = {
   deleteUser,
   updateMe,
   deleteMe,
+  getMe,
 };
